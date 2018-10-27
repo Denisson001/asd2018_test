@@ -7,12 +7,12 @@ public:
 	Node* right_child;
 	Node(){
 		size = 1;
-		parent = left_child = right_child = NULL;
+		parent = left_child = right_child = nullptr;
 	}
 	Node(Type x){
 		value = x;
 		size = 1;
-		parent = left_child = right_child = NULL;
+		parent = left_child = right_child = nullptr;
 	}
 };
 
@@ -23,7 +23,7 @@ template<class Type>
 class Pointer{
 	friend class Binary_heap<Type>;
 private:
-	Node<Type>** element;
+	Node<Type>* element;
 };
 
 template<class Type>
@@ -44,7 +44,7 @@ private:
 	void sift_up(Node<Type>* v);
 	void sift_down(Node<Type>* v);
 	int get_size(Node<Type>* v);
-	void recursive_erase(Node<Type>* v);
+	void recursive_destruct(Node<Type>* v);
 };
 
 //деструктор
