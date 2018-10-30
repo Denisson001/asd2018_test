@@ -1,29 +1,21 @@
 template<class Type>      
 class Dynamic_array{
 public:
+    ~Dynamic_array();
     Dynamic_array();
-    int size();
+    size_t size();
     bool is_empty();
     void push_back(Type x);
     void pop_back();
-    Type& operator[] (int pos) {
-        return array[pos];
-    }
-    Type operator[] (int pos) const {
-        return array[pos];
-    }
-///DEBUG ONLY=======================================================================
-    void print();
-    void print_size();
-///=================================================================================
+    Type& operator[] (size_t pos);
+    Type operator[] (size_t pos) const;
 private:    
-    int globalSize;
-    int realSize;
-    int* array;
-    const static int INCREASE_FACTOR = 2; //GROWTH_FACTOR
-    const static int DECREASE_FACTOR = 2;
-    const static int DECREASE_BORDER_FACTOR = 4;
-
+    size_t globalSize;
+    size_t realSize;
+    Type* array;
+    const static size_t INCREASE_FACTOR = 2; //GROWTH_FACTOR
+    const static size_t DECREASE_FACTOR = 2;
+    const static size_t DECREASE_BORDER_FACTOR = 4;
     void increase_array();
     void decrease_array();
 };

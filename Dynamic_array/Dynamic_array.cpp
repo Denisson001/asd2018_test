@@ -1,5 +1,10 @@
 #include "Dynamic_array.h"
     
+template<class Type>
+Dynamic_array<Type>::~Dynamic_array(){
+    delete[] array;
+}
+
 template<class Type>   
 Dynamic_array<Type>::Dynamic_array(){
     globalSize = 1;
@@ -8,7 +13,7 @@ Dynamic_array<Type>::Dynamic_array(){
 }
 
 template<class Type>   
-int Dynamic_array<Type>::size(){
+size_t Dynamic_array<Type>::size(){
     return realSize;
 }
 
@@ -37,34 +42,19 @@ void Dynamic_array<Type>::pop_back(){
 }
 
 template<class Type>  
-Type& Dynamic_array<Type>::operator[] (int pos) {
+Type& Dynamic_array<Type>::operator[] (size_t pos){
     return array[pos];
 }
 
 template<class Type>  
-Type operator[] (int pos) const {
+Type Dynamic_array<Type>::operator[] (size_t pos) const{
     return array[pos];
 }
-
-///DEBUG ONLY=======================================================================
-template<class Type>  
-void Dynamic_array<Type>::print(){
-    for (int i = 0; i < realSize; i++){
-        std::cout << array[i] << ' ';
-    }
-    std::cout << std::endl;
-}
-
-template<class Type>  
-void Dynamic_array<Type>::print_size(){
-    std::cout << realSize << ' ' << globalSize << std::endl;
-}
-///=================================================================================
 
 template<class Type>  
 void Dynamic_array<Type>::increase_array(){
-    int* tmpArray = new Type[globalSize * INCREASE_FACTOR];
-    for (int i = 0; i < realSize; i++){
+    Type* tmpArray = new Type[globalSize * INCREASE_FACTOR];
+    for (size_t i = 0; i < realSize; i++){
         tmpArray[i] = array[i];
     }
     delete[] array;
@@ -74,8 +64,8 @@ void Dynamic_array<Type>::increase_array(){
 
 template<class Type>  
 void Dynamic_array<Type>::decrease_array(){
-    int* tmpArray = new Type[globalSize / DECREASE_FACTOR];
-    for (int i = 0; i < realSize; i++){
+    Type* tmpArray = new Type[globalSize / DECREASE_FACTOR];
+    for (size_t i = 0; i < realSize; i++){
         tmpArray[i] = array[i];
     }
     delete[] array;

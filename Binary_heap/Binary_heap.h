@@ -1,50 +1,25 @@
+#include "../Dynamic_array/Dynamic_array.cpp"
+
 template<class Type>
 class Node{
 public:
-	Type value, size;
-	Node* parent;
-	Node* left_child;
-	Node* right_child;
-	Node(){
-		size = 1;
-		parent = left_child = right_child = nullptr;
+	Type key;
+	Node(){}
+	Node(Type _key){
+		key = _key;
 	}
-	Node(Type x){
-		value = x;
-		size = 1;
-		parent = left_child = right_child = nullptr;
-	}
-};
-
-template<class Type>
-class Binary_heap;
-
-template<class Type>
-class Pointer{
-	friend class Binary_heap<Type>;
-private:
-	Node<Type>* element;
 };
 
 template<class Type>
 class Binary_heap{
 public:
-	Binary_heap();
 	~Binary_heap();
-	bool is_empty();
-	void insert(Type x);
-	Type get_min();
+	bool is_empty() const;
+	void insert(Type key);
+	Type get_min() const;
 	Type extract_min();
-//===========DEBUG ONLY==========================
-	//void print(Node* v);
-//===============================================
-	Pointer<Type> kek();
 private:
-	Node<Type>* root;
-	void sift_up(Node<Type>* v);
-	void sift_down(Node<Type>* v);
-	int get_size(Node<Type>* v);
-	void recursive_destruct(Node<Type>* v);
+	Dynamic_array<Node<Type>*> array;
+	void sift_up(size_t ind);
+	void sift_down(size_t ind);
 };
-
-//деструктор
