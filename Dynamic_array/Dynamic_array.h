@@ -3,12 +3,13 @@ class Dynamic_array{
 public:
     ~Dynamic_array();
     Dynamic_array();
-    size_t size();
-    bool is_empty();
+    size_t size() const;
+    bool is_empty() const;
     void push_back(Type x);
     void pop_back();
     Type& operator[] (size_t pos);
     Type operator[] (size_t pos) const;
+    Dynamic_array<Type>& operator= (const Dynamic_array& other_array);
 private:    
     size_t globalSize;
     size_t realSize;

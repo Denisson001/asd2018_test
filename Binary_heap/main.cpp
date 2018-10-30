@@ -7,15 +7,14 @@ using namespace std;
 
 int main(){
 	srand(31);
+	Binary_heap<int> a;
 	vector<int> d;
-	Binary_heap<string> t;
-	for (int i = 0; i < 20; i++){
-		string s;
-		int len = rand() % 10 + 1;
-		for (int j = 0; j < len; j++) s += (rand() % 10 + 'a');
-		t.insert(s);
+	for (int i = 0; i < 100; i++){
+		int x = rand() % 1000;
+		d.push_back(x);
 	}
-	for (int i = 0; i < 20; i++){
-		cout << t.extract_min() << endl;
+	a = Binary_heap<int>(d.begin(), d.end());
+	for (int i = 0; i < 100; i++){
+		cout << a.extract_min() << endl;
 	}
 }	

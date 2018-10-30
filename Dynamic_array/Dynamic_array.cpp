@@ -1,6 +1,21 @@
 #include "Dynamic_array.h"
     
 template<class Type>
+Dynamic_array<Type>& Dynamic_array<Type>::operator= (const Dynamic_array<Type>& other_array){
+    if (this == &other_array){
+        return *this;
+    }
+    delete[] array;
+    globalSize = other_array.globalSize;
+    realSize = other_array.realSize;
+    array = new Type[globalSize];
+    for (size_t i = 0; i < realSize; i++){
+        array[i] = other_array.array[i];
+    }
+    return *this;
+}
+
+template<class Type>
 Dynamic_array<Type>::~Dynamic_array(){
     delete[] array;
 }
@@ -13,12 +28,12 @@ Dynamic_array<Type>::Dynamic_array(){
 }
 
 template<class Type>   
-size_t Dynamic_array<Type>::size(){
+size_t Dynamic_array<Type>::size() const{
     return realSize;
 }
 
 template<class Type>  
-bool Dynamic_array<Type>::is_empty(){
+bool Dynamic_array<Type>::is_empty() const{
     return size() == 0;
 }
 
