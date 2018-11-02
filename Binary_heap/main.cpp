@@ -8,13 +8,15 @@ using namespace std;
 int main(){
 	srand(31);
 	Binary_heap<int> a;
-	vector<int> d;
-	for (int i = 0; i < 100; i++){
-		int x = rand() % 1000;
-		d.push_back(x);
+	vector<Pointer<int> > t;
+	for (int i = 0; i < 10; i++){
+		int x = rand() % 100;
+		cout << "===" << x << endl;
+		t.push_back(a.insert(x));
 	}
-	a = Binary_heap<int>(d.begin(), d.end());
-	for (int i = 0; i < 100; i++){
+	a.change(t[0], -1111);
+	for (int i = 0; i < 10; i++){
 		cout << a.extract_min() << endl;
+		//cout << (*t[i].pointer->pointer).key << endl;
 	}
 }	
