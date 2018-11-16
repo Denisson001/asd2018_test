@@ -5,18 +5,28 @@
 
 using namespace std;
 
+/*
+const int MAX_MEM = 10e8;
+int mpos = 0;
+char mem[MAX_MEM];
+void * operator new ( size_t n ) {
+    char *res = mem + mpos;
+    mpos += n;
+    return (void *)res;
+}
+void operator delete ( void * ) { }
+*/
+
 int main(){
 	srand(31);
-	Binary_heap<int> a;
-	vector<Pointer<int> > t;
-	for (int i = 0; i < 10; i++){
-		int x = rand() % 100;
-		cout << "===" << x << endl;
-		t.push_back(a.insert(x));
+	vector<int> t;
+	for (int i = 0; i < (int)1e6; i++){
+		t.push_back(rand() % (int)1e9);
 	}
-	a.change(t[0], -1111);
-	for (int i = 0; i < 10; i++){
-		cout << a.extract_min() << endl;
-		//cout << (*t[i].pointer->pointer).key << endl;
+	Binary_heap<int> a(t.begin(), t.end());
+	long long val = 0;
+	for (int i = 0; i < (int)1e6; i++){
+		val += a.extract_min();
 	}
+	cout << val;
 }	

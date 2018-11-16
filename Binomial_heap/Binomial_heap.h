@@ -40,7 +40,7 @@ public:
 	void insert(Type key);					
 	Type get_min();									
 	Type extract_min();								
-	void merge(Binomial_heap &otherHeap);	
+	void merge(Binomial_heap &other_heap);	
 	void print(Node<Type> *uk);	
 	Node<Type> *root;		
 private:

@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/heap_clion.dir/main.cpp.o  -o heap_clion 

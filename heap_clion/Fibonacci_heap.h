@@ -10,7 +10,7 @@ class Node;
 template<class Type>
 class Node{
 public:
-	Type key;	//key
+	Type key;		//key
 	Node* parent;	//parent
 	Node* child;    //last child
 	Node* left;     //left sibling
