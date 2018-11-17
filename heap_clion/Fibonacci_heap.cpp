@@ -1,37 +1,49 @@
 #include "Fibonacci_heap.h"
 
 template<class Type>
+Node<Type>::~Node() {
+    delete auxiliary_pointer;
+}
+
+template<class Type>
 void Fibonacci_heap<Type>::recursive_destruct(Node<Type> *v) {
-    if (v == nullptr){
+    if (v == nullptr) {
         return;
     }
     recursive_destruct(v->child);
     Node<Type> *save = v->right;
     delete v;
-    recursive_destruct(v->right);
+    recursive_destruct(save->right);
 }
 
 template<class Type>
-Fibonacci_heap<Type>::~Fibonacci_heap(){
+Fibonacci_heap<Type>::~Fibonacci_heap() {
     recursive_destruct(root);
 }
 
 template<class Type>
-Fibonacci_heap<Type>::Fibonacci_heap(){
+Fibonacci_heap<Type>::Fibonacci_heap() {
     root = nullptr;
 }
 
 template<class Type>
-bool Fibonacci_heap<Type>::is_empty() const{
+bool Fibonacci_heap<Type>::is_empty() const {
     return root == nullptr;
 }
 
 template<class Type>
-void Fibonacci_heap<Type>::merge(Fibonacci_heap &other_heap){
-    if (other_heap.is_empty()){
+void Fibonacci_heap<Type>::swap_nodes(Node<Type> *a, Node<Type> *b) {
+    std::swap(a->key, b->key);
+    std::swap(a->auxiliary_pointer, b->auxiliary_pointer);
+    std::swap(a->auxiliary_pointer->pointer, b->auxiliary_pointer->pointer);
+}
+
+template<class Type>
+void Fibonacci_heap<Type>::merge(Fibonacci_heap &other_heap) {
+    if (other_heap.is_empty()) {
         return;
     }
-    if (is_empty()){
+    if (is_empty()) {
         root = other_heap.root;
         other_heap.root = nullptr;
         return;
@@ -45,29 +57,32 @@ void Fibonacci_heap<Type>::merge(Fibonacci_heap &other_heap){
 }
 
 template<class Type>
-void Fibonacci_heap<Type>::insert(Type key){
+Pointer<Type> Fibonacci_heap<Type>::insert(Type key) {
     Node<Type> *new_node = new Node<Type>(key);
+    Pointer<Type> pointer;
+    pointer.pointer = new_node->auxiliary_pointer;
     Fibonacci_heap<Type> new_heap;
     new_heap.root = new_node;
     merge(new_heap);
+    return pointer;
 }
 
 template<class Type>
-Type Fibonacci_heap<Type>::get_min() const{
-    if (is_empty()){
+Type Fibonacci_heap<Type>::get_min() const {
+    if (is_empty()) {
         throw std::out_of_range("heap is empty");
     }
     return root->key;
 }
 
 template<class Type>
-Type Fibonacci_heap<Type>::extract_min(){
-    if (is_empty()){
+Type Fibonacci_heap<Type>::extract_min() {
+    if (is_empty()) {
         throw std::out_of_range("heap is empty");
     }
     Type min_key = root->key;
     Node<Type> *pos = root->child;
-    if (root->left == root){
+    if (root->left == root) {
         delete root;
         root = nullptr;
     } else {
@@ -77,7 +92,7 @@ Type Fibonacci_heap<Type>::extract_min(){
         delete root;
         root = save;
     }
-    if (pos != nullptr){
+    if (pos != nullptr) {
         while (pos->parent != nullptr){
             pos->parent = nullptr;
             pos = pos->right;
@@ -93,12 +108,12 @@ Type Fibonacci_heap<Type>::extract_min(){
 }
 
 template<class Type>
-void Fibonacci_heap<Type>::consolidate(){
-    if (is_empty()){
+void Fibonacci_heap<Type>::consolidate() {
+    if (is_empty()) {
         return;
     }
     Node<Type> **node_array = new Node<Type>*[NODE_ARRAY_SIZE];
-    for (size_t i = 0; i < NODE_ARRAY_SIZE; i++){
+    for (size_t i = 0; i < NODE_ARRAY_SIZE; i++) {
         node_array[i] = nullptr;
     }
     Node<Type> *last_root = root;
@@ -130,7 +145,7 @@ void Fibonacci_heap<Type>::consolidate(){
         node_array[it] = now;
     } while(root != last_root);
     root = nullptr;
-    for (size_t i = 0; i < NODE_ARRAY_SIZE; i++) if (node_array[i] != nullptr){
+    for (size_t i = 0; i < NODE_ARRAY_SIZE; i++) if (node_array[i] != nullptr) {
         Fibonacci_heap<Type> new_heap;
         new_heap.root = node_array[i];
         new_heap.root->left = new_heap.root;
@@ -139,3 +154,22 @@ void Fibonacci_heap<Type>::consolidate(){
     }
     delete[] node_array;
 }
+
+template<class Type>
+void Fibonacci_heap<Type>::decrease(Pointer<Type> pointer, Type key) {
+    Node<Type> *now = pointer.pointer->pointer;
+    if (now->key < key) {
+        throw std::logic_error("new key is bigger");
+    }
+    now->key = key;
+    while(now->parent != nullptr){
+        if (now->parent->key > now->key){
+            swap_nodes(now, now->parent);
+            now = now->parent;
+        } else {
+            break;
+        }
+    }
+    if (now->key < root->key) root = now;
+}
+

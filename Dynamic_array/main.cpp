@@ -5,7 +5,7 @@ using namespace std;
 
 int main(){	
 	Dynamic_array<int> a;
-	for (int i = 0; i < 100; i++){
+	for (int i = 0; i < 100; i++) {
 		a.push_back(i);
 	}
 	cout << a[33] << endl;

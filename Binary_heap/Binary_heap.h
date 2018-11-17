@@ -13,38 +13,35 @@ template<class Type>
 class Binary_heap;
 
 template<class Type>
-class Pointer{
+class Pointer {
 	friend Binary_heap<Type>;
-public:
-	~Pointer();
 private:
 	Auxiliary_pointer<Type>* pointer;
 };
 
 template<class Type>
-class Auxiliary_pointer{
+class Auxiliary_pointer {
 public:
-	~Auxiliary_pointer();
 	size_t pointer;
 };
 
 template<class Type>
-class Node{
+class Node {
 public:
 	Type key;
 	Auxiliary_pointer<Type>* auxiliary_pointer;
 	~Node();
-	Node(){
+	Node() {
 		auxiliary_pointer = new Auxiliary_pointer<Type>();
 	}
-	Node(Type key){
+	Node(Type key) {
 		this->key = key;
 		auxiliary_pointer = new Auxiliary_pointer<Type>();
 	}
 };
 
 template<class Type>
-class Binary_heap{
+class Binary_heap {
 public:
 	~Binary_heap();
 	Binary_heap();

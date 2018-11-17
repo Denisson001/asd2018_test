@@ -7,19 +7,14 @@ using namespace std;
 int main() {
     srand(31);
     Fibonacci_heap<int> t;
-    set<int> se;
-    for (int it = 0; it < (int)1e6; it++){
-        int x = rand() % (int)1e9;
-        t.insert(x);
-        //cout << it << ' ' << t.get_min() << endl;
+    vector<Pointer<int>> kek;
+    for (int i = 0; i < 100; i++) {
+        kek.push_back(t.insert(i * 10));
     }
-    long long val = 0;
-    int last = -1;
-    for (int it = 0; it < (int)1e6; it++){
-        int x = t.extract_min();
-        val += x;
-        if (last > x) assert(0);
-        last = x;
+    for (int i = 0; i < 100; i++) {
+        if (i % 2 == 0) t.decrease(kek[i], i);
     }
-    cout << val;
+    for (int i = 0; i < 100; i++) {
+        cout << t.extract_min() << endl;
+    }
 }

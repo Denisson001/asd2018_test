@@ -17,15 +17,15 @@ void * operator new ( size_t n ) {
 void operator delete ( void * ) { }
 */
 
-int main(){
+int main() {
 	srand(31);
 	vector<int> t;
-	for (int i = 0; i < (int)1e6; i++){
+	for (int i = 0; i < (int)1e6; i++) {
 		t.push_back(rand() % (int)1e9);
 	}
 	Binary_heap<int> a(t.begin(), t.end());
 	long long val = 0;
-	for (int i = 0; i < (int)1e6; i++){
+	for (int i = 0; i < (int)1e6; i++) {
 		val += a.extract_min();
 	}
 	cout << val;

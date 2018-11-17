@@ -9,20 +9,20 @@ class Pointer;
 
 
 template<class Type>
-class Node{
+class Node {
 public:
-	Type key;		//key
-	Node *parent;	//parent
-	Node *child;    //first child
-	Node *sibling;  //right sibling
-	int degree;     //degree of the node //int -> char
-	Node(){
+	Type key;	
+	Node *parent;	
+	Node *child;    
+	Node *sibling;  
+	size_t degree;  
+	Node() {
 		parent = nullptr;
 		child = nullptr;
 		sibling = nullptr;
 		degree = 0;
 	}
-	Node(Type _key){
+	Node(Type _key) {
 		key = _key;
 		parent = nullptr;
 		child = nullptr;
@@ -32,7 +32,7 @@ public:
 };
 
 template<class Type>
-class Binomial_heap{
+class Binomial_heap {
 public:
 	Binomial_heap();								
 	~Binomial_heap();								

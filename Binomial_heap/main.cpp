@@ -20,7 +20,7 @@ int main(){
 	srand(111);
 	Binomial_heap<int> t;
 
-	for (int it = 0; it < 1e6; it++){
+	for (int it = 0; it < 1e6; it++) {
 		int x = rand() % (int)1e9;
 		t.insert(x);
 	//	cout << "now          " << x << endl;
@@ -32,7 +32,7 @@ int main(){
 
 	int last = -1;
 	long long ans = 0;
-	for (int it = 0; it < 1e6; it++){
+	for (int it = 0; it < 1e6; it++) {
 		int x = t.extract_min();
 		if (x < last) assert(0);
 		last = x;

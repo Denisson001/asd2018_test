@@ -1,5 +1,5 @@
 template<class Type>      
-class Dynamic_array{
+class Dynamic_array {
 public:
     ~Dynamic_array();
     Dynamic_array();
