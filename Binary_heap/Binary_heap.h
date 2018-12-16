@@ -15,6 +15,10 @@ class Binary_heap;
 template<class Type>
 class Pointer {
 	friend Binary_heap<Type>;
+public:
+	bool operator== (Pointer<Type> nxt) {
+		return pointer->pointer == nxt.pointer->pointer;
+	}
 private:
 	Auxiliary_pointer<Type>* pointer;
 };
@@ -51,8 +55,10 @@ public:
 	Pointer<Type> insert(Type key);
 	Type get_min() const;
 	Type extract_min();
-	void erase(Pointer<Type> pointer);							//delete
+	void erase(Pointer<Type> pointer);					
 	void change(Pointer<Type> pointer, Type key);		
+	Type get_val(Pointer<Type> pointer);
+	Pointer<Type> get_min_key_pointer();
 private:
 	void sift_up(size_t ind);
 	void sift_down(size_t ind);

@@ -19,7 +19,7 @@ public:
 	Node() {
 		parent = nullptr;
 		child = nullptr;
-		sibling = nullptr;
+		sibling = nullptr;								//!!!!!!
 		degree = 0;
 	}
 	Node(Type _key) {
@@ -41,8 +41,9 @@ public:
 	Type get_min();									
 	Type extract_min();								
 	void merge(Binomial_heap &other_heap);	
-	void print(Node<Type> *uk);	
-	Node<Type> *root;		
 private:
+	void update_min_val();
+	Node<Type> *root;		
+	Type min_val;
 	void recursive_destruct(Node<Type> *v);		
 };

@@ -58,11 +58,17 @@ void Dynamic_array<Type>::pop_back() {
 
 template<class Type>  
 Type& Dynamic_array<Type>::operator[] (size_t pos) {
+    if (pos >= realSize){
+        throw std::out_of_range("dynamic array`s size is smaller");
+    }
     return array[pos];
 }
 
 template<class Type>  
 Type Dynamic_array<Type>::operator[] (size_t pos) const {
+    if (pos >= realSize){
+        throw std::out_of_range("dynamic array`s size is smaller");
+    }
     return array[pos];
 }
 
@@ -79,11 +85,15 @@ void Dynamic_array<Type>::increase_array() {
 
 template<class Type>  
 void Dynamic_array<Type>::decrease_array() {
-    Type* tmpArray = new Type[globalSize / DECREASE_FACTOR];
+    size_t new_size = globalSize / DECREASE_FACTOR;
+    if (new_size == 0) {
+        new_size = 1;
+    }
+    Type* tmpArray = new Type[new_size];
     for (size_t i = 0; i < realSize; i++) {
         tmpArray[i] = array[i];
     }
     delete[] array;
     array = tmpArray;
-    globalSize /= DECREASE_FACTOR;
+    globalSize = new_size;
 }

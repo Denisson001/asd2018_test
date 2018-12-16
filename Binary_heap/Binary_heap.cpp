@@ -101,18 +101,15 @@ Type Binary_heap<Type>::extract_min() {
 		throw std::out_of_range("heap is empty");
 	}
 	Type key = array[0]->key;
-	swap_nodes(array[0], array[array.size() - 1]);															//swap first and last nodes
-	delete array[array.size() - 1];																			//delete last node
-	array.pop_back();																						//pop back last node
+	swap_nodes(array[0], array[array.size() - 1]);															
+	delete array[array.size() - 1];																			
+	array.pop_back();																						
 	sift_down(0);
 	return key;
 }
 
 template<class Type>
 void Binary_heap<Type>::erase(Pointer<Type> pointer) {
-	if (array.size() == 0) {
-		throw std::out_of_range("heap is empty");
-	}
 	size_t ind = pointer.pointer->pointer;
 	swap_nodes(array[ind], array[array.size() - 1]);
 	delete array[array.size() - 1];
@@ -121,6 +118,7 @@ void Binary_heap<Type>::erase(Pointer<Type> pointer) {
 		return;
 	}
 	sift_down(ind);
+	sift_up(ind);
 }
 
 template<class Type>
@@ -133,4 +131,19 @@ void Binary_heap<Type>::change(Pointer<Type> pointer, Type key) {
 		array[ind]->key = key;
 		sift_down(ind);
 	}
+}
+
+template<class Type>
+Type Binary_heap<Type>::get_val(Pointer<Type> pointer) {
+	return array[pointer.pointer->pointer]->key;
+}
+
+template<class Type>
+Pointer<Type> Binary_heap<Type>::get_min_key_pointer() {
+	if (array.size() == 0) {
+		throw std::out_of_range("heap is empty");
+	}
+	Pointer<Type> pointer;
+	pointer.pointer = array[0]->auxiliary_pointer;
+	return pointer;
 }

@@ -20,7 +20,7 @@ public:
 	Node *right;
 	size_t degree;
 	bool mark;
-    Auxiliary_pointer<Type> *auxiliary_pointer;
+   	Auxiliary_pointer<Type> *auxiliary_pointer;
     ~Node();
 	Node() {
 		parent = nullptr;
@@ -29,25 +29,18 @@ public:
 		right = this;
 		degree = 0;
 		mark = 0;
-        auxiliary_pointer = new Auxiliary_pointer<Type>;
-        auxiliary_pointer->pointer = this;
-	}
-	Node(Type key) {
-		this->key = key;
-		parent = nullptr;
-		child = nullptr;
-        left = this;
-        right = this;
-        degree = 0;
-		mark = 0;
-        auxiliary_pointer = new Auxiliary_pointer<Type>;
-        auxiliary_pointer->pointer = this;
+    	auxiliary_pointer = new Auxiliary_pointer<Type>;
+   		auxiliary_pointer->pointer = this;
 	}
 };
 
 template<class Type>
 class Pointer {
     friend class Fibonacci_heap<Type>;
+public:
+	bool operator== (Pointer<Type> nxt) {
+		return pointer->pointer == nxt.pointer->pointer;
+	}
 private:
     Auxiliary_pointer<Type> *pointer;
 };
@@ -63,16 +56,18 @@ class Fibonacci_heap {
 public:
     Fibonacci_heap();
     ~Fibonacci_heap();
-	bool is_empty() const;
+    bool is_empty() const;
     Pointer<Type> insert(Type key);
     Type get_min() const;
     void merge(Fibonacci_heap &other_heap);
     Type extract_min();
     void decrease(Pointer<Type> pointer, Type key);
+    Type get_val(Pointer<Type> pointer);
+    Pointer<Type> get_min_key_pointer();
 private:
-    Node<Type> *root;                                                                                                   //min key node
-    static const size_t NODE_ARRAY_SIZE = 100;
-	void consolidate();
+    Node<Type> *root; //min key node
+    static const size_t NODE_ARRAY_SIZE = 50;
+    void consolidate();
     void recursive_destruct(Node<Type> *v);
     void swap_nodes(Node<Type> *a, Node<Type> *b);
 };

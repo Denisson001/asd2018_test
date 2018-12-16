@@ -1,4 +1,5 @@
 #include "Fibonacci_heap.h"
+#include <bits/stdc++.h>
 
 template<class Type>
 Node<Type>::~Node() {
@@ -11,9 +12,9 @@ void Fibonacci_heap<Type>::recursive_destruct(Node<Type> *v) {
         return;
     }
     recursive_destruct(v->child);
-    Node<Type> *save = v->right;
+    v->left->right = nullptr;
+    recursive_destruct(v->right);
     delete v;
-    recursive_destruct(save->right);
 }
 
 template<class Type>
@@ -58,7 +59,8 @@ void Fibonacci_heap<Type>::merge(Fibonacci_heap &other_heap) {
 
 template<class Type>
 Pointer<Type> Fibonacci_heap<Type>::insert(Type key) {
-    Node<Type> *new_node = new Node<Type>(key);
+    Node<Type> *new_node = new Node<Type>;
+    new_node->key = key;
     Pointer<Type> pointer;
     pointer.pointer = new_node->auxiliary_pointer;
     Fibonacci_heap<Type> new_heap;
@@ -173,3 +175,17 @@ void Fibonacci_heap<Type>::decrease(Pointer<Type> pointer, Type key) {
     if (now->key < root->key) root = now;
 }
 
+template<class Type>
+Type Fibonacci_heap<Type>::get_val(Pointer<Type> pointer) {
+    return pointer.pointer->pointer->key;
+}
+
+template<class Type>
+Pointer<Type> Fibonacci_heap<Type>:: get_min_key_pointer() {
+    if (is_empty()) {
+        throw std::out_of_range("heap is empty");
+    }
+    Pointer<Type> pointer;
+    pointer.pointer = root->auxiliary_pointer;
+    return pointer;
+}

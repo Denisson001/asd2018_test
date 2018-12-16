@@ -11,9 +11,9 @@ public:
     Type operator[] (size_t pos) const;
     Dynamic_array<Type>& operator= (const Dynamic_array& other_array);
 private:    
+    Type* array;
     size_t globalSize;
     size_t realSize;
-    Type* array;
     const static size_t INCREASE_FACTOR = 2; //GROWTH_FACTOR
     const static size_t DECREASE_FACTOR = 2;
     const static size_t DECREASE_BORDER_FACTOR = 4;
