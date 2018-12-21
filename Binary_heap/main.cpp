@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
             //cout << e.what() << endl;
         }
         try {
-            Pointer<char> pp = t.get_min_key_pointer();
+            Pointer_binary_heap<char> pp = t.get_min_key_pointer();
         } catch (const std::out_of_range& e) {
             //cout << e.what() << endl;
         }
@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
 		//small tests
 		Solver<int> t1;
 		Binary_heap<int> t2;
-		Dynamic_array< Pointer<int> > vp; 
+		Dynamic_array< Pointer_binary_heap<int> > vp; 
 		bool OK = 1;
 		for (size_t it = 0; it < 10000; ++it) {
 			size_t type = rand() % 5;
@@ -79,7 +79,7 @@ int main(int argc, char *argv[]) {
 				}
 			}
 			if (type == 2){
-				Pointer<int> pointer = t2.get_min_key_pointer();
+				Pointer_binary_heap<int> pointer = t2.get_min_key_pointer();
 				size_t pos = -1;
 				for (size_t i = 0; i < vp.size(); i++) if (vp[i] == pointer) {
 					pos = i;
@@ -96,7 +96,7 @@ int main(int argc, char *argv[]) {
 			}
 			if (type == 3) {
 				size_t pos = rand() % vp.size();
-				Pointer<int> pointer = vp[pos];
+				Pointer_binary_heap<int> pointer = vp[pos];
 				swap(vp[pos], vp[vp.size() - 1]);
 				vp.pop_back();
 				t1.erase(t2.get_val(pointer));

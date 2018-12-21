@@ -3,56 +3,56 @@ template<class Type>
 class Fibonacci_heap;
 
 template<class Type>
-class Auxiliary_pointer;
+class Auxiliary_pointer_fibonacci_heap;
 
 template<class Type>
-class Pointer;
+class Pointer_fibonacci_heap;
 
 template<class Type>
-class Node;
+class Node_fibonacci_heap;
 
 template<class Type>
-class Node {
+class Node_fibonacci_heap {
 public:
 	Type key;
-	Node *parent;
-	Node *child;
-	Node *left;
-	Node *right;
+	Node_fibonacci_heap *parent;
+	Node_fibonacci_heap *child;
+	Node_fibonacci_heap *left;
+	Node_fibonacci_heap *right;
 	size_t degree;
 	bool mark;
-   	Auxiliary_pointer<Type> *auxiliary_pointer;
-    ~Node();
-	Node() {
+   	Auxiliary_pointer_fibonacci_heap<Type> *auxiliary_pointer;
+    ~Node_fibonacci_heap();
+	Node_fibonacci_heap() {
 		parent = nullptr;
 		child = nullptr;
 		left = this;
 		right = this;
 		degree = 0;
 		mark = 0;
-        auxiliary_pointer = new Auxiliary_pointer<Type>;
+        auxiliary_pointer = new Auxiliary_pointer_fibonacci_heap<Type>;
    		auxiliary_pointer->pointer = this;
 	}
-    Node(Type key) : Node() {
+    Node_fibonacci_heap(Type key) : Node_fibonacci_heap() {
         this->key = key;
     }
 };
 
 template<class Type>
-class Pointer {
+class Pointer_fibonacci_heap {
     friend class Fibonacci_heap<Type>;
 public:
-	bool operator== (Pointer<Type> nxt) {
+	bool operator== (Pointer_fibonacci_heap<Type> nxt) {
 		return pointer->pointer == nxt.pointer->pointer;
 	}
 private:
-    Auxiliary_pointer<Type> *pointer;
+    Auxiliary_pointer_fibonacci_heap<Type> *pointer;
 };
 
 template <class Type>
-class Auxiliary_pointer {
+class Auxiliary_pointer_fibonacci_heap {
 public:
-    Node<Type> *pointer;
+    Node_fibonacci_heap<Type> *pointer;
 };
 
 template<class Type>
@@ -61,20 +61,20 @@ public:
     Fibonacci_heap();
     ~Fibonacci_heap();
     bool is_empty() const;
-    Pointer<Type> insert(Type key);
+    Pointer_fibonacci_heap<Type> insert(Type key);
     Type get_min() const;
     void merge(Fibonacci_heap &other_heap);
     Type extract_min();
-    void decrease(Pointer<Type> pointer, Type key);
-    Type get_val(Pointer<Type> pointer);
-    Pointer<Type> get_min_key_pointer();
+    void decrease(Pointer_fibonacci_heap<Type> pointer, Type key);
+    Type get_val(Pointer_fibonacci_heap<Type> pointer);
+    Pointer_fibonacci_heap<Type> get_min_key_pointer();
 private:
-    Node<Type> *root; //min key node
+    Node_fibonacci_heap<Type> *root; //min key node
     static const size_t NODE_ARRAY_SIZE = 35;
-    Node<Type> **node_array;
+    Node_fibonacci_heap<Type> **node_array;
     void consolidate();
-    void recursive_destruct(Node<Type> *v);
-    void swap_nodes(Node<Type> *a, Node<Type> *b);
+    void recursive_destruct(Node_fibonacci_heap<Type> *v);
+    void swap_nodes(Node_fibonacci_heap<Type> *a, Node_fibonacci_heap<Type> *b);
     void rebuild_list();
-    void insert_node(Node<Type> *v);
+    void insert_node(Node_fibonacci_heap<Type> *v);
 };

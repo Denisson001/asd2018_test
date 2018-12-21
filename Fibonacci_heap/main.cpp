@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
 
     if (test_exceptions){
         Fibonacci_heap<char> t;
-        Pointer<char> p = t.insert('d');
+        Pointer_fibonacci_heap<char> p = t.insert('d');
         try {
             t.decrease(p, 'z');
         } catch (const std::logic_error& e) {
@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
             //cout << e.what() << endl;
         }
         try {
-            Pointer<char> pp = t.get_min_key_pointer();
+            Pointer_fibonacci_heap<char> pp = t.get_min_key_pointer();
         } catch (const std::out_of_range& e) {
             //cout << e.what() << endl;
         }
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
         //small tests
         Solver<int> t1;
         Fibonacci_heap<int> t2;
-        Dynamic_array< Pointer<int> > vp; 
+        Dynamic_array< Pointer_fibonacci_heap<int> > vp; 
         bool OK = 1;
         for (size_t it = 0; it < 5000; ++it) {
             size_t type = rand() % 5;
@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
                 t2.decrease(vp[pos], val);
             }
             if (type == 4){
-                Pointer<int> pointer = t2.get_min_key_pointer();
+                Pointer_fibonacci_heap<int> pointer = t2.get_min_key_pointer();
                 size_t pos = -1;
                 for (size_t i = 0; i < vp.size(); i++) if (vp[i] == pointer) {
                     pos = i;

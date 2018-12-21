@@ -1,7 +1,7 @@
 #include "Binary_heap.h"
 
 template<class Type>
-Node<Type>::~Node() {
+Node_binary_heap<Type>::~Node_binary_heap() {
 	delete auxiliary_pointer;
 }
 
@@ -14,7 +14,7 @@ Binary_heap<Type>::Binary_heap() {
 }
 
 template<class Type>
-void swap_nodes(Node<Type> *a, Node<Type> *b) {
+void swap_nodes(Node_binary_heap<Type> *a, Node_binary_heap<Type> *b) {
 	std::swap(a->key, b->key);
 	std::swap(a->auxiliary_pointer, b->auxiliary_pointer);
 	std::swap(a->auxiliary_pointer->pointer, b->auxiliary_pointer->pointer);
@@ -44,7 +44,7 @@ template<class Type>
 template<class Iterator>
 Binary_heap<Type>::Binary_heap(Iterator begin, Iterator end) {
 	while(begin != end) {
-		Node<Type>* new_node = new Node<Type>(*begin);
+		Node_binary_heap<Type>* new_node = new Node_binary_heap<Type>(*begin);
 		new_node->auxiliary_pointer->pointer = array.size();
 		array.push_back(new_node);
 		++begin;
@@ -77,11 +77,11 @@ void Binary_heap<Type>::sift_up(size_t ind) {
 }
 
 template<class Type>
-Pointer<Type> Binary_heap<Type>::insert(Type key) {
-	Node<Type>* new_node = new Node<Type>(key);
+Pointer_binary_heap<Type> Binary_heap<Type>::insert(Type key) {
+	Node_binary_heap<Type>* new_node = new Node_binary_heap<Type>(key);
 	new_node->auxiliary_pointer->pointer = array.size();
 	array.push_back(new_node);
-	Pointer<Type> pointer;
+	Pointer_binary_heap<Type> pointer;
 	pointer.pointer = array[array.size() - 1]->auxiliary_pointer;
 	sift_up(array.size() - 1);
 	return pointer;
@@ -109,7 +109,7 @@ Type Binary_heap<Type>::extract_min() {
 }
 
 template<class Type>
-void Binary_heap<Type>::erase(Pointer<Type> pointer) {
+void Binary_heap<Type>::erase(Pointer_binary_heap<Type> pointer) {
 	size_t ind = pointer.pointer->pointer;
 	swap_nodes(array[ind], array[array.size() - 1]);
 	delete array[array.size() - 1];
@@ -122,7 +122,7 @@ void Binary_heap<Type>::erase(Pointer<Type> pointer) {
 }
 
 template<class Type>
-void Binary_heap<Type>::change(Pointer<Type> pointer, Type key) {
+void Binary_heap<Type>::change(Pointer_binary_heap<Type> pointer, Type key) {
 	size_t ind = pointer.pointer->pointer;
 	if (key < array[ind]->key) {
 		array[ind]->key = key;
@@ -134,16 +134,16 @@ void Binary_heap<Type>::change(Pointer<Type> pointer, Type key) {
 }
 
 template<class Type>
-Type Binary_heap<Type>::get_val(Pointer<Type> pointer) {
+Type Binary_heap<Type>::get_val(Pointer_binary_heap<Type> pointer) {
 	return array[pointer.pointer->pointer]->key;
 }
 
 template<class Type>
-Pointer<Type> Binary_heap<Type>::get_min_key_pointer() {
+Pointer_binary_heap<Type> Binary_heap<Type>::get_min_key_pointer() {
 	if (array.size() == 0) {
 		throw std::out_of_range("heap is empty");
 	}
-	Pointer<Type> pointer;
+	Pointer_binary_heap<Type> pointer;
 	pointer.pointer = array[0]->auxiliary_pointer;
 	return pointer;
 }

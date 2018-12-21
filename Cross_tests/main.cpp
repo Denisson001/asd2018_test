@@ -2,13 +2,13 @@
 #include "../Stupid_solver/main.cpp"
 #include "../Binary_heap/Binary_heap.cpp"
 #include "../Binomial_heap/Binomial_heap.cpp"
-//#include "../Fibonacci_heap/Fibonacci_heap.cpp"
+#include "../Fibonacci_heap/Fibonacci_heap.cpp"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
 	srand(atoi(argv[1]));
-	/*Solver<int> t1;
+	Solver<int> t1;
 	Binary_heap<int> t2;
 	Binomial_heap<int> t3;
 	Fibonacci_heap<int> t4;
@@ -53,5 +53,5 @@ int main(int argc, char *argv[]) {
 	} else {
 		cout << "WRONG" << endl;
 		return -1;
-	}*/
+	}
 }	

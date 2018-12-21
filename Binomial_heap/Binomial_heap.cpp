@@ -1,7 +1,7 @@
 #include "Binomial_heap.h"
 
 template<class Type>
-void Binomial_heap<Type>::recursive_destruct(Node<Type> *v) {
+void Binomial_heap<Type>::recursive_destruct(Node_binomial_heap<Type> *v) {
 	if (v == nullptr) return;
 	recursive_destruct(v->sibling);
 	recursive_destruct(v->child);
@@ -29,7 +29,7 @@ void Binomial_heap<Type>::update_min_val() {
 		return;
 	}
 	min_val = root->key;
-	Node<Type> *pos = root;
+	Node_binomial_heap<Type> *pos = root;
 	while(pos != nullptr) {						
 		if (pos->key < min_val) min_val = pos->key;									
 		pos = pos->sibling;
@@ -47,7 +47,7 @@ void Binomial_heap<Type>::merge_lists(Binomial_heap<Type> &other_heap) {
 	}
 	//root selection
 	if (other_heap.root->degree < root->degree) std::swap(root, other_heap.root);   		
-	Node<Type> *pos = root;
+	Node_binomial_heap<Type> *pos = root;
 	//merge linked lists										
 	while(true) {											
 		if (other_heap.root == nullptr) {							
@@ -60,7 +60,7 @@ void Binomial_heap<Type>::merge_lists(Binomial_heap<Type> &other_heap) {
 		}
 		//node insertion
 		if (other_heap.root->degree < pos->sibling->degree) {					
-			Node<Type> *tmp = pos->sibling;
+			Node_binomial_heap<Type> *tmp = pos->sibling;
 			pos->sibling = other_heap.root;
 			other_heap.root = other_heap.root->sibling;
 			pos->sibling->sibling = tmp;
@@ -72,7 +72,7 @@ void Binomial_heap<Type>::merge_lists(Binomial_heap<Type> &other_heap) {
 template<class Type>
 void Binomial_heap<Type>::rebuild_heap() {
 	if (is_empty()) return;
-	Node<Type> *prev_pos = nullptr, *pos = root;
+	Node_binomial_heap<Type> *prev_pos = nullptr, *pos = root;
 	while(pos->sibling != nullptr) {									
 		if (pos->degree == pos->sibling->degree) {
 			//if there are 3 nodes with same degree then skip first one
@@ -80,7 +80,7 @@ void Binomial_heap<Type>::rebuild_heap() {
 				prev_pos = pos;
 				pos = pos->sibling;							
 			}
-			Node<Type> *tmp;
+			Node_binomial_heap<Type> *tmp;
 			if (pos->key < pos->sibling->key) {
 				//case, when the sibling node is a new child of the current node
 				tmp = pos->child;
@@ -117,7 +117,7 @@ void Binomial_heap<Type>::merge(Binomial_heap<Type> &other_heap) {
 template<class Type>
 void Binomial_heap<Type>::insert(Type key) {
 	Binomial_heap<Type> new_heap;
-	new_heap.root = new Node<Type>(key);
+	new_heap.root = new Node_binomial_heap<Type>(key);
 	merge(new_heap);
 }
 
@@ -130,15 +130,15 @@ Type Binomial_heap<Type>::get_min() {
 }
 
 template<class Type>
-Node<Type>* Binomial_heap<Type>::extract_min_key_node() {
-	Node<Type> *pos = root;
+Node_binomial_heap<Type>* Binomial_heap<Type>::extract_min_key_node() {
+	Node_binomial_heap<Type> *pos = root;
 	if (root->key == get_min()) {
 		root = root->sibling;
 		return pos;
 	}
 	while(true) {																							
 		if (pos->sibling->key == get_min()) {																
-			Node<Type> *min_key_node = pos->sibling;
+			Node_binomial_heap<Type> *min_key_node = pos->sibling;
 			pos->sibling = pos->sibling->sibling;
 			return min_key_node;
 		}
@@ -147,12 +147,12 @@ Node<Type>* Binomial_heap<Type>::extract_min_key_node() {
 } 
 
 template<class Type>
-Node<Type>* Binomial_heap<Type>::rebuild_list(Node<Type> *v) {
-	Node<Type> *prev_pos = nullptr;
+Node_binomial_heap<Type>* Binomial_heap<Type>::rebuild_list(Node_binomial_heap<Type> *v) {
+	Node_binomial_heap<Type> *prev_pos = nullptr;
 	//reverse list
 	while(v != nullptr) {
 		v->parent = nullptr;
-		Node<Type> *tmp = v;
+		Node_binomial_heap<Type> *tmp = v;
 		v = v->sibling;
 		tmp->sibling = prev_pos;
 		prev_pos = tmp;
@@ -166,7 +166,7 @@ Type Binomial_heap<Type>::extract_min() {
 		throw std::out_of_range("heap is empty");
 	}
 
-	Node<Type>* min_key_node = extract_min_key_node();
+	Node_binomial_heap<Type>* min_key_node = extract_min_key_node();
 	Type min_key = min_key_node->key;
 
 	Binomial_heap<Type> new_heap;
