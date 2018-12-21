@@ -1,3 +1,4 @@
+#pragma once
 template<class Type>
 class Fibonacci_heap;
 
@@ -29,9 +30,12 @@ public:
 		right = this;
 		degree = 0;
 		mark = 0;
-    	auxiliary_pointer = new Auxiliary_pointer<Type>;
+        auxiliary_pointer = new Auxiliary_pointer<Type>;
    		auxiliary_pointer->pointer = this;
 	}
+    Node(Type key) : Node() {
+        this->key = key;
+    }
 };
 
 template<class Type>
@@ -66,8 +70,11 @@ public:
     Pointer<Type> get_min_key_pointer();
 private:
     Node<Type> *root; //min key node
-    static const size_t NODE_ARRAY_SIZE = 50;
+    static const size_t NODE_ARRAY_SIZE = 35;
+    Node<Type> **node_array;
     void consolidate();
     void recursive_destruct(Node<Type> *v);
     void swap_nodes(Node<Type> *a, Node<Type> *b);
+    void rebuild_list();
+    void insert_node(Node<Type> *v);
 };

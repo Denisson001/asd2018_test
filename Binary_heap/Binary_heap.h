@@ -59,8 +59,9 @@ public:
 	void change(Pointer<Type> pointer, Type key);		
 	Type get_val(Pointer<Type> pointer);
 	Pointer<Type> get_min_key_pointer();
+	bool check_correctness();
 private:
+	Dynamic_array<Node<Type>*> array;
 	void sift_up(size_t ind);
 	void sift_down(size_t ind);
-	Dynamic_array<Node<Type>*> array;
 };

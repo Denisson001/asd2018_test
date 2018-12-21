@@ -20,11 +20,13 @@ void Fibonacci_heap<Type>::recursive_destruct(Node<Type> *v) {
 template<class Type>
 Fibonacci_heap<Type>::~Fibonacci_heap() {
     recursive_destruct(root);
+    delete[] node_array;
 }
 
 template<class Type>
 Fibonacci_heap<Type>::Fibonacci_heap() {
     root = nullptr;
+    node_array = new Node<Type>*[NODE_ARRAY_SIZE];
 }
 
 template<class Type>
@@ -50,6 +52,7 @@ void Fibonacci_heap<Type>::merge(Fibonacci_heap &other_heap) {
         return;
     }
     if (other_heap.root->key < root->key) std::swap(root, other_heap.root);
+    //merge lists
     other_heap.root->left->right = root->right;
     root->right->left = other_heap.root->left;
     root->right = other_heap.root;
@@ -59,8 +62,7 @@ void Fibonacci_heap<Type>::merge(Fibonacci_heap &other_heap) {
 
 template<class Type>
 Pointer<Type> Fibonacci_heap<Type>::insert(Type key) {
-    Node<Type> *new_node = new Node<Type>;
-    new_node->key = key;
+    Node<Type> *new_node = new Node<Type>(key);
     Pointer<Type> pointer;
     pointer.pointer = new_node->auxiliary_pointer;
     Fibonacci_heap<Type> new_heap;
@@ -82,7 +84,7 @@ Type Fibonacci_heap<Type>::extract_min() {
     if (is_empty()) {
         throw std::out_of_range("heap is empty");
     }
-    Type min_key = root->key;
+    Type min_key = get_min();
     Node<Type> *pos = root->child;
     if (root->left == root) {
         delete root;
@@ -95,12 +97,10 @@ Type Fibonacci_heap<Type>::extract_min() {
         root = save;
     }
     if (pos != nullptr) {
-        while (pos->parent != nullptr){
+        while (pos->parent != nullptr) {
             pos->parent = nullptr;
             pos = pos->right;
         }
-    }
-    if (pos != nullptr) {
         Fibonacci_heap<Type> new_heap;
         new_heap.root = pos;
         merge(new_heap);
@@ -110,51 +110,54 @@ Type Fibonacci_heap<Type>::extract_min() {
 }
 
 template<class Type>
-void Fibonacci_heap<Type>::consolidate() {
-    if (is_empty()) {
-        return;
+void Fibonacci_heap<Type>::insert_node(Node<Type> *v) {
+    size_t it = v->degree;
+    while (node_array[it] != nullptr) {
+        if (node_array[it]->key < v->key) {
+            std::swap(node_array[it], v);
+        }
+        v->degree++;
+        node_array[it]->parent = v;
+        if (v->child != nullptr) {
+            node_array[it]->right = v->child;
+            node_array[it]->left = v->child->left;
+            v->child->left->right = node_array[it];
+            v->child->left = node_array[it];
+        }
+        v->child = node_array[it];
+        node_array[it] = nullptr;
+        it++;
     }
-    Node<Type> **node_array = new Node<Type>*[NODE_ARRAY_SIZE];
+    node_array[it] = v;
+}
+
+template<class Type>
+void Fibonacci_heap<Type>::rebuild_list() {
     for (size_t i = 0; i < NODE_ARRAY_SIZE; i++) {
         node_array[i] = nullptr;
     }
-    Node<Type> *last_root = root;
+    Node<Type> *save_root = root;
     do {
         Node<Type> *now = root;
         root = root->right;
         now->left = now;
         now->right = now;
-        size_t it = now->degree;
-        while (node_array[it] != nullptr) {
-            if (node_array[it]->key < now->key) {
-                std::swap(node_array[it], now);
-            }
-            now->degree++;
-            node_array[it]->parent = now;
-            if (now->child == nullptr) {
-                node_array[it]->left = node_array[it];
-                node_array[it]->right = node_array[it];
-            } else {
-                node_array[it]->right = now->child;
-                node_array[it]->left = now->child->left;
-                now->child->left->right = node_array[it];
-                now->child->left = node_array[it];
-            }
-            now->child = node_array[it];
-            node_array[it] = nullptr;
-            it++;
-        }
-        node_array[it] = now;
-    } while(root != last_root);
+        insert_node(now);
+    } while(root != save_root);
     root = nullptr;
+}
+
+template<class Type>
+void Fibonacci_heap<Type>::consolidate() {
+    if (is_empty()) {
+        return;
+    }
+    rebuild_list();
     for (size_t i = 0; i < NODE_ARRAY_SIZE; i++) if (node_array[i] != nullptr) {
         Fibonacci_heap<Type> new_heap;
         new_heap.root = node_array[i];
-        new_heap.root->left = new_heap.root;
-        new_heap.root->right = new_heap.root;
         merge(new_heap);
     }
-    delete[] node_array;
 }
 
 template<class Type>

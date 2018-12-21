@@ -5,10 +5,6 @@ template<class Type>
 class Node;
 
 template<class Type>
-class Pointer;
-
-
-template<class Type>
 class Node {
 public:
 	Type key;	
@@ -19,11 +15,11 @@ public:
 	Node() {
 		parent = nullptr;
 		child = nullptr;
-		sibling = nullptr;								//!!!!!!
+		sibling = nullptr;
 		degree = 0;
 	}
-	Node(Type _key) {
-		key = _key;
+	Node(Type key) {
+		this->key = key;
 		parent = nullptr;
 		child = nullptr;
 		sibling = nullptr;
@@ -42,8 +38,12 @@ public:
 	Type extract_min();								
 	void merge(Binomial_heap &other_heap);	
 private:
-	void update_min_val();
 	Node<Type> *root;		
 	Type min_val;
 	void recursive_destruct(Node<Type> *v);		
+	void update_min_val();
+	void merge_lists(Binomial_heap<Type> &other_heap); 
+	void rebuild_heap();
+	Node<Type>* rebuild_list(Node<Type> *v);
+	Node<Type>* extract_min_key_node(); 
 };

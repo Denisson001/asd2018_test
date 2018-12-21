@@ -1,7 +1,7 @@
 template<class T>
 class Solver{
 public:
-	T a[111111];
+	T a[1111111];
 	size_t sz;
 
 	Solver() {
@@ -25,9 +25,7 @@ public:
 	void erase(T x) {
 		for (size_t i = 0; i < sz; ++i) {
 			if (a[i] == x) {
-				for (size_t j = i; j + 1 < sz; j++) {
-					a[j] = a[j + 1];
-				}
+				std::swap(a[i], a[sz - 1]);
 				sz--;
 				break;
 			}

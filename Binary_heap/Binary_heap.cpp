@@ -147,3 +147,12 @@ Pointer<Type> Binary_heap<Type>::get_min_key_pointer() {
 	pointer.pointer = array[0]->auxiliary_pointer;
 	return pointer;
 }
+
+template<class Type>
+bool Binary_heap<Type>::check_correctness() {
+	for (size_t i = 0; i < array.size(); ++i) {
+		if (i * 2 + 1 < array.size() && array[i]->key > array[i * 2 + 1]->key) return 0;
+		if (i * 2 + 2 < array.size() && array[i]->key > array[i * 2 + 2]->key) return 0;
+	}
+	return 1;
+}

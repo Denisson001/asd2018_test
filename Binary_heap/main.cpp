@@ -9,7 +9,7 @@ const bool test_exceptions = 1;
 int main(int argc, char *argv[]) {
 	srand(atoi(argv[2]));
 
-	if (test_exceptions){
+	if (test_exceptions) {
         Binary_heap<char> t;
         t.insert('x');
         char x = t.extract_min();
@@ -29,6 +29,23 @@ int main(int argc, char *argv[]) {
             //cout << e.what() << endl;
         }
     }
+
+	if (*argv[1] == 'i') {
+		const int SZ = 10000000;
+		int *d = new int[SZ];
+		for (size_t i = 0; i < SZ; ++i) {
+			d[i] = rand() % (2000000) - 1000000;
+		}
+		Binary_heap<int> t = Binary_heap<int>(d, d + SZ);
+		delete[] d;
+		if (t.check_correctness()) {
+			cout << "OK" << endl;
+			return 0;
+		} else {
+			cout << "WRONG" << endl;
+			return -1;
+		}
+	}
 
 	if (*argv[1] == 's') {
 		//small tests

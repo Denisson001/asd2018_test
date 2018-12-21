@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
                 }
             }
             if (type == 2) {
-                int new_size = rand() % 20 + 1;
+                int new_size = rand() % 555 + 1;
                 Fibonacci_heap<int> new_heap;
                 for (size_t i = 0; i < new_size; ++i){
                     int val = rand() % (2000000) - 1000000;
@@ -130,5 +130,29 @@ int main(int argc, char *argv[]) {
         }
         cout << "OK" << endl;
         return 0;
+    }
+
+    if (*argv[1] == 'm') {
+        //merge tests
+        Dynamic_array<Fibonacci_heap<int>*> t;
+        size_t time_start = clock();
+        for (size_t it = 0; it < 100000; ++it) {
+            Fibonacci_heap<int> *d = new Fibonacci_heap<int>;
+            for (size_t sz = 0; sz < (rand() % 10 + 1) * 500; sz++){
+                int val = rand() % (2000000) - 1000000;
+                d->insert(val);
+            }
+            t.push_back(d);
+        }
+        size_t time_stop = clock();
+        cout.precision(2);
+        cout << "time for initialization: " << fixed << (time_stop - time_start) / (double)CLOCKS_PER_SEC << endl;
+        time_start = time_stop;
+        for (size_t i = 1; i < 100000; ++i) {
+            t[0]->merge(*t[i]);
+        }
+        time_stop = clock();
+        cout.precision(5);
+        cout << "time for 100000 merges: " << fixed << (time_stop - time_start) / (double)CLOCKS_PER_SEC << endl;
     }
 }   
