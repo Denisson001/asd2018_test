@@ -1,3 +1,0 @@
-/home/denisson/lab/asd2018_test/heap_clion/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/denisson/lab/asd2018_test/heap_clion/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/denisson/lab/asd2018_test/heap_clion/cmake-build-debug/CMakeFiles/heap_clion.dir

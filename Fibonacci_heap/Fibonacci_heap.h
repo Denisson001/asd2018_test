@@ -1,4 +1,7 @@
 #pragma once
+
+#include <stdexcept>
+
 template<class Type>
 class Fibonacci_heap;
 
@@ -19,7 +22,7 @@ public:
 	Node_fibonacci_heap *child;
 	Node_fibonacci_heap *left;
 	Node_fibonacci_heap *right;
-	size_t degree;
+	std::size_t degree;
 	bool mark;
    	Auxiliary_pointer_fibonacci_heap<Type> *auxiliary_pointer;
     ~Node_fibonacci_heap();
@@ -34,19 +37,21 @@ public:
    		auxiliary_pointer->pointer = this;
 	}
     Node_fibonacci_heap(Type key) : Node_fibonacci_heap() {
-        this->key = key;
+    	this->key = key;
     }
 };
 
 template<class Type>
 class Pointer_fibonacci_heap {
     friend class Fibonacci_heap<Type>;
+
 public:
 	bool operator== (Pointer_fibonacci_heap<Type> nxt) {
 		return pointer->pointer == nxt.pointer->pointer;
 	}
+
 private:
-    Auxiliary_pointer_fibonacci_heap<Type> *pointer;
+	Auxiliary_pointer_fibonacci_heap<Type> *pointer;
 };
 
 template <class Type>
@@ -68,6 +73,7 @@ public:
     void decrease(Pointer_fibonacci_heap<Type> pointer, Type key);
     Type get_val(Pointer_fibonacci_heap<Type> pointer);
     Pointer_fibonacci_heap<Type> get_min_key_pointer();
+
 private:
     Node_fibonacci_heap<Type> *root; //min key node
     static const size_t NODE_ARRAY_SIZE = 35;
