@@ -17,27 +17,27 @@ class Node_fibonacci_heap;
 template<class Type>
 class Node_fibonacci_heap {
 public:
-	Type key;
-	Node_fibonacci_heap *parent;
-	Node_fibonacci_heap *child;
-	Node_fibonacci_heap *left;
-	Node_fibonacci_heap *right;
-	std::size_t degree;
-	bool mark;
-   	Auxiliary_pointer_fibonacci_heap<Type> *auxiliary_pointer;
+    Type key;
+    Node_fibonacci_heap *parent;
+    Node_fibonacci_heap *child;
+    Node_fibonacci_heap *left;
+    Node_fibonacci_heap *right;
+    std::size_t degree;
+    bool mark;
+    Auxiliary_pointer_fibonacci_heap<Type> *auxiliary_pointer;
     ~Node_fibonacci_heap();
-	Node_fibonacci_heap() {
-		parent = nullptr;
-		child = nullptr;
-		left = this;
-		right = this;
-		degree = 0;
-		mark = 0;
+    Node_fibonacci_heap() {
+        parent = nullptr;
+        child = nullptr;
+        left = this;
+        right = this;
+        degree = 0;
+        mark = 0;
         auxiliary_pointer = new Auxiliary_pointer_fibonacci_heap<Type>;
-   		auxiliary_pointer->pointer = this;
-	}
+        auxiliary_pointer->pointer = this;
+    }
     Node_fibonacci_heap(Type key) : Node_fibonacci_heap() {
-    	this->key = key;
+        this->key = key;
     }
 };
 
@@ -46,12 +46,12 @@ class Pointer_fibonacci_heap {
     friend class Fibonacci_heap<Type>;
 
 public:
-	bool operator== (Pointer_fibonacci_heap<Type> nxt) {
-		return pointer->pointer == nxt.pointer->pointer;
-	}
+    bool operator== (Pointer_fibonacci_heap<Type> nxt) {
+        return pointer->pointer == nxt.pointer->pointer;
+    }
 
 private:
-	Auxiliary_pointer_fibonacci_heap<Type> *pointer;
+    Auxiliary_pointer_fibonacci_heap<Type> *pointer;
 };
 
 template <class Type>
