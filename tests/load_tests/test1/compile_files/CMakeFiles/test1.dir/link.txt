@@ -1,1 +1,0 @@
-/usr/bin/c++   -std=c++14 -O2 -Wall  -rdynamic CMakeFiles/test1.dir/home/denisson/github/heaps/asd2018_test/tests/load_tests/test1/main.cpp.o  -o test1 

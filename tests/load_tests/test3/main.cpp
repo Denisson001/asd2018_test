@@ -1,20 +1,20 @@
 #include <iostream>
 
-#include "Binary_heap.cpp"
 #include "Binomial_heap.cpp"
 #include "Fibonacci_heap.cpp"
 
-const int IT = 5;
+const int IT = 2;
 const int size = 8;
 const int MAXVAL = (int)1e9;
+const int ohter_heap_size = 150;
 const int values[size] = {100,
+                          500,
                           1000,
+                          5000,
                           10000,
+                          50000,
                           100000,
-                          500000,
-                          1000000,
-                          3000000,
-                          5000000};
+                          150000};
 
 class testResult{
 public:
@@ -40,15 +40,20 @@ public:
 template<class Heap>
 void runTest(Heap& heap, int count){
     for (int i = 0; i < count; i++){
-        heap.insert(rand() % MAXVAL);
+        Heap other_heap;
+        for (int j = 0; j < ohter_heap_size; j++){
+            other_heap.insert(rand() % MAXVAL);
+        }
+        heap.merge(other_heap);
     }
+
 }
 
 template<class Heap>
 testResult testHeap(std::string heap_name){
     testResult result;
     for (int i = 0; i < size; i++){
-        std::cerr << heap_name << ": " << values[i] << " insert operations" << std::endl;
+        std::cerr << heap_name << ": " << values[i] << " merge operations" << std::endl;
         result.min[i] = 1e9;
         result.max[i] = -1e9;
         result.avg[i] = 0;
@@ -68,9 +73,8 @@ testResult testHeap(std::string heap_name){
 }
 
 int main(){
-    assert(freopen("load_test1_result.txt", "w", stdout));
+    assert(freopen("load_test3_result.txt", "w", stdout));
     srand(31);
-    testResult binary_heap_result = testHeap<Binary_heap<int>>("Binary heap");
     testResult binomial_heap_result = testHeap<Binomial_heap<int>>("Binomial heap");
     testResult fibonacci_heap_result = testHeap<Fibonacci_heap<int>>("Fibonacci heap");
 
@@ -81,9 +85,6 @@ int main(){
         std::cout << values[i] << ' ';
     }
     std::cout << "\n\n";
-
-    std::cout << "Binary heap:\n";
-    binary_heap_result.print();
 
     std::cout << "Binomial heap:\n";
     binomial_heap_result.print();

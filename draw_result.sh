@@ -1,1 +1,6 @@
-python painter/painter.py
+#!/bin/bash
+
+for ((i = 1; i <= 5; i++))
+do
+   python painters/load_test${i}_painter.py
+done

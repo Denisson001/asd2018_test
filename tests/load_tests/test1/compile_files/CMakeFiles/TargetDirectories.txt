@@ -1,3 +1,0 @@
-/home/denisson/github/heaps/asd2018_test/tests/load_tests/test1/compile_files/CMakeFiles/rebuild_cache.dir
-/home/denisson/github/heaps/asd2018_test/tests/load_tests/test1/compile_files/CMakeFiles/edit_cache.dir
-/home/denisson/github/heaps/asd2018_test/tests/load_tests/test1/compile_files/CMakeFiles/test1.dir

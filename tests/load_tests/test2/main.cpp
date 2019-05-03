@@ -4,8 +4,8 @@
 #include "Binomial_heap.cpp"
 #include "Fibonacci_heap.cpp"
 
-const int IT = 5;
-const int size = 8;
+const int IT = 3;
+const int size = 7;
 const int MAXVAL = (int)1e9;
 const int values[size] = {100,
                           1000,
@@ -13,8 +13,7 @@ const int values[size] = {100,
                           100000,
                           500000,
                           1000000,
-                          3000000,
-                          5000000};
+                          3000000};
 
 class testResult{
 public:
@@ -42,13 +41,19 @@ void runTest(Heap& heap, int count){
     for (int i = 0; i < count; i++){
         heap.insert(rand() % MAXVAL);
     }
+    int last = -1;
+    for (int i = 0; i < count; i++){
+        int value = heap.extract_min();
+    	assert(value >= last);
+    	last = value;
+    }
 }
 
 template<class Heap>
 testResult testHeap(std::string heap_name){
     testResult result;
     for (int i = 0; i < size; i++){
-        std::cerr << heap_name << ": " << values[i] << " insert operations" << std::endl;
+        std::cerr << heap_name << ": " << values[i] << " insert & extract operations" << std::endl;
         result.min[i] = 1e9;
         result.max[i] = -1e9;
         result.avg[i] = 0;
@@ -68,7 +73,7 @@ testResult testHeap(std::string heap_name){
 }
 
 int main(){
-    assert(freopen("load_test1_result.txt", "w", stdout));
+    assert(freopen("load_test2_result.txt", "w", stdout));
     srand(31);
     testResult binary_heap_result = testHeap<Binary_heap<int>>("Binary heap");
     testResult binomial_heap_result = testHeap<Binomial_heap<int>>("Binomial heap");

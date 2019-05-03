@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "***RUN UNIT TESTS***"
 
 cd tests/unit_tests
@@ -8,9 +10,14 @@ echo "***RUN LOAD TESTS***"
 
 cd tests/load_tests
 
-cd test1
-bash run_test.sh
-cp test1_result.txt ../../../test_results
-cd ..
+for ((i = 1; i <= 5; i++))
+do
+   cd test${i}
+   bash run_test.sh
+   cp load_test${i}_result.txt ../../../test_results
+   cd ..
+done
 
 cd ../..
+
+echo "***RUN STRESS TESTS***"

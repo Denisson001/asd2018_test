@@ -1,10 +1,11 @@
 #include <iostream>
+#include <vector>
+#include <cassert>
+#include <iomanip>
 
 #include "Binary_heap.cpp"
-#include "Binomial_heap.cpp"
-#include "Fibonacci_heap.cpp"
 
-const int IT = 5;
+const int IT = 3;
 const int size = 8;
 const int MAXVAL = (int)1e9;
 const int values[size] = {100,
@@ -37,10 +38,14 @@ public:
     }
 };
 
-template<class Heap>
-void runTest(Heap& heap, int count){
+template<class Type, template<class> class Heap>
+void runTest(Heap<Type>& heap, int count){
+    std::vector<Pointer_binary_heap<Type> > pointers;
     for (int i = 0; i < count; i++){
-        heap.insert(rand() % MAXVAL);
+        pointers.push_back(heap.insert(rand() % MAXVAL));
+    }
+    for (int i = 0; i < count; i++){
+        heap.erase(pointers[i]);
     }
 }
 
@@ -48,7 +53,7 @@ template<class Heap>
 testResult testHeap(std::string heap_name){
     testResult result;
     for (int i = 0; i < size; i++){
-        std::cerr << heap_name << ": " << values[i] << " insert operations" << std::endl;
+        std::cerr << heap_name << ": " << values[i] << " erase operations" << std::endl;
         result.min[i] = 1e9;
         result.max[i] = -1e9;
         result.avg[i] = 0;
@@ -68,11 +73,9 @@ testResult testHeap(std::string heap_name){
 }
 
 int main(){
-    assert(freopen("load_test1_result.txt", "w", stdout));
+    assert(freopen("load_test5_result.txt", "w", stdout));
     srand(31);
     testResult binary_heap_result = testHeap<Binary_heap<int>>("Binary heap");
-    testResult binomial_heap_result = testHeap<Binomial_heap<int>>("Binomial heap");
-    testResult fibonacci_heap_result = testHeap<Fibonacci_heap<int>>("Fibonacci heap");
 
     std::cout << std::setprecision(8) << std::fixed;
 
@@ -84,10 +87,4 @@ int main(){
 
     std::cout << "Binary heap:\n";
     binary_heap_result.print();
-
-    std::cout << "Binomial heap:\n";
-    binomial_heap_result.print();
-
-    std::cout << "Fibonacci heap:\n";
-    fibonacci_heap_result.print();
 }
