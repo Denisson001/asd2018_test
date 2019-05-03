@@ -76,7 +76,7 @@ public:
 
 private:
     Node_fibonacci_heap<Type> *root; //min key node
-    static const size_t NODE_ARRAY_SIZE = 35;
+    static const size_t NODE_ARRAY_SIZE = 40;
     Node_fibonacci_heap<Type> **node_array;
     void consolidate();
     void recursive_destruct(Node_fibonacci_heap<Type> *v);

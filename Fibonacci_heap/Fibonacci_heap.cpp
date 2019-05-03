@@ -8,25 +8,34 @@ Node_fibonacci_heap<Type>::~Node_fibonacci_heap() {
 
 template<class Type>
 void Fibonacci_heap<Type>::recursive_destruct(Node_fibonacci_heap<Type> *v) {
-    if (v == nullptr) {
+    if (v == nullptr){
         return;
     }
-    recursive_destruct(v->child);
-    v->left->right = nullptr;
-    recursive_destruct(v->right);
-    delete v;
+    auto pos = v;
+    int size = 0;
+    while(1){
+        recursive_destruct(pos->child);
+        pos = pos->left;
+        size++;
+        if (pos == v){
+            break;
+        }
+    }
+    while(size--){
+        auto last = pos;
+        pos = pos->left;
+        delete last;
+    }
 }
 
 template<class Type>
 Fibonacci_heap<Type>::~Fibonacci_heap() {
     recursive_destruct(root);
-    delete[] node_array;
 }
 
 template<class Type>
 Fibonacci_heap<Type>::Fibonacci_heap() {
     root = nullptr;
-    node_array = new Node_fibonacci_heap<Type>*[NODE_ARRAY_SIZE];
 }
 
 template<class Type>
@@ -152,12 +161,14 @@ void Fibonacci_heap<Type>::consolidate() {
     if (is_empty()) {
         return;
     }
+    node_array = new Node_fibonacci_heap<Type>*[NODE_ARRAY_SIZE];
     rebuild_list();
     for (size_t i = 0; i < NODE_ARRAY_SIZE; i++) if (node_array[i] != nullptr) {
         Fibonacci_heap<Type> new_heap;
         new_heap.root = node_array[i];
         merge(new_heap);
     }
+    delete[] node_array;
 }
 
 template<class Type>

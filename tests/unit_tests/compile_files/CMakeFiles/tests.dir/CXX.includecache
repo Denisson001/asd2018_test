@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../../../Fibonacci_heap/Fibonacci_heap.cpp
+Fibonacci_heap.h
+../../../Fibonacci_heap/Fibonacci_heap.h
+bits/stdc++.h
+-
+
+../../../Fibonacci_heap/Fibonacci_heap.h
+stdexcept
+-
+
+/home/denisson/github/heaps/asd2018_test/tests/unit_tests/tests/fibonacci_heap_tests.cpp
+boost/test/unit_test.hpp
+-
+vector
+-
+Fibonacci_heap.cpp
+-
+

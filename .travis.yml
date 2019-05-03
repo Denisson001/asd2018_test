@@ -17,3 +17,7 @@ script:
   - bash compile_main.sh
   - bash compile_tests.sh
   - bash run_tests.sh
+
+notifications:
+  email:
+    - shpakovskij.denis@yandex.ru
