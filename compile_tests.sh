@@ -5,13 +5,9 @@ bash compile_tests.sh
 cd ../..
 
 cd tests/load_tests
+bash compile_tests.sh
+cd ../..
 
-
-for ((i = 1; i <= 5; i++))
-do
-   cd test${i}
-   bash compile_test.sh
-   cd ..
-done
-
+cd tests/stress_tests
+bash compile_tests.sh
 cd ../..
