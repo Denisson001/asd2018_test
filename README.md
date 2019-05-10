@@ -1,9 +1,5 @@
 [![Build Status](https://travis-ci.org/Denisson001/asd2018_test.svg?branch=master)](https://travis-ci.org/Denisson001/asd2018_test)
 
-- #### [Unit tests](#Unit tests)
-- #### [Stress tests](#Stress tests)
-- #### [Usability tests](#Usability tests)
-
 # Heaps gallery
 - Binary heap
 - Binomial heap
